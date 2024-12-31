@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function InputWithLabel ({ id, label, type, placeholder }){
+export function InputWithLabel ({ id, label, type, placeholder, register, error }){
     return (
         <span className="w-full">
           <Label 
@@ -15,7 +15,9 @@ export function InputWithLabel ({ id, label, type, placeholder }){
             type={type} 
             id={id} 
             placeholder={placeholder}
+            {...register}
           />
+          <span className="text-sm text-red-400 absolute select-none">{error}</span>
         </span>
     )
 }

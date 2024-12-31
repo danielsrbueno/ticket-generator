@@ -1,6 +1,5 @@
-import { Button } from "@/components/ui/button";
 import Image from "next/image"
-import { InputWithLabel } from "../components/inputWithLabel";
+import Form from "@/components/form";
 
 export default function Home() {
   return (
@@ -16,26 +15,7 @@ export default function Home() {
         <h1 className="w-[50rem] text-5xl font-bold text-center">Your Journey to Coding Conf 2025 Starts Here!</h1>
         <p className="text-zinc-300">Secure your spot at next year's biggest coding conference.</p>
       </div>
-      <form className="w-1/3 flex flex-col items-center gap-4">
-        <InputWithLabel 
-          id="fullname" 
-          label="Full Name" 
-          type="text"
-        />
-        <InputWithLabel 
-          id="email" 
-          label="Email Address" 
-          type="email"
-          placeholder="example@email.com"
-        />
-        <InputWithLabel 
-          id="github" 
-          label="Github Username" 
-          type="text"
-          placeholder="yourusername"
-        />
-        <Button className="w-full bg-orange-600 hover:bg-orange-700" type="submit">Generate My Ticket</Button>
-      </form>
+      <Form />
     </div>
   );
 }

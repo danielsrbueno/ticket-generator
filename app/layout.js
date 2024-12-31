@@ -16,22 +16,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-br">
-      <body
-        className={`${jetBrainsMono.className} antialiased`}
-      >
+      <body className={`${jetBrainsMono.className} antialiased`}>
         {children}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Remove atributos dinâmicos adicionados por extensões como Dark Reader
-              document.querySelectorAll('[data-darkreader-mode]').forEach(el => {
-                el.removeAttribute('data-darkreader-mode');
-                el.removeAttribute('data-darkreader-scheme');
-                el.removeAttribute('data-darkreader-proxy-injected');
-              });
-            `,
-          }}
-        />
       </body>
     </html>
   );
