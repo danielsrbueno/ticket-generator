@@ -17,6 +17,10 @@ body {
   url("/background.png") no-repeat center/ cover fixed;
 }
 
+.ticketshape {
+  background: url("/pattern-ticket.svg") no-repeat center/ 520px;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
