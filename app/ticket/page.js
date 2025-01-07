@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { InputWithLabel } from "@/components/inputWithLabel"
 import { Button } from "@/components/ui/button"
 import { useRouter } from 'next/navigation'
+import Link from "next/link"
 
 const findTicketSchema = z.object({
     userName: z.string()
@@ -47,7 +48,10 @@ export default function FindTicket() {
                     register={register('ticketId')}
                     error={errors.ticketId?.message}
                 />
-                <Button className="w-full bg-orange-600 hover:bg-orange-700" type="submit">Find My Ticket</Button>
+                <div className="w-full flex flex-col items-center justify-center gap-1">
+                    <Button className="w-full bg-orange-600 hover:bg-orange-700" type="submit">Find My Ticket</Button>
+                    <Link href="/" className="text-sm underline tracking-tighter text-orange-400 hover:text-orange-500">I don't have a ticket</Link>
+                </div>
             </form>
         </div>
     )

@@ -4,6 +4,9 @@ import { useParams } from "next/navigation"
 import Image from "next/image"
 import { Github } from "lucide-react"
 import api from "@/services/api"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Home } from "lucide-react"
 
 export default function Ticket() {
     const { ticketId } = useParams()
@@ -59,6 +62,7 @@ export default function Ticket() {
 
     return (
         <div className="w-screen h-screen bg-slate-950 flex flex-col items-center justify-center text-zinc-50 background gap-8">
+            <Link href="/"><Button className="absolute top-2 right-2 bg-orange-600 hover:bg-orange-700" type="submit"><Home />Back to home</Button></Link>
             <Image 
                 className="-ml-1"
                 src="/logo-full.svg"
