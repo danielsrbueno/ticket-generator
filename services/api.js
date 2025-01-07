@@ -1,10 +1,9 @@
-import axios from 'axios';
-require('dotenv').config();
+import axios from 'axios'
 
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+const backendUrl = 'https://ticket-generator-backend-mu.vercel.app'
 
 const api = axios.create({
-    baseURL: backendUrl,
-});
+    baseURL: backendUrl
+})
 
-export default api;
+export default api
