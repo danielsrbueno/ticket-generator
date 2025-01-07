@@ -7,6 +7,7 @@ import { InputWithLabel } from "@/components/inputWithLabel"
 import { Button } from "@/components/ui/button"
 import { useRouter } from 'next/navigation'
 import api from "@/services/api"
+import Link from "next/link"
 
 const createTicketSchema = z.object({
     fullname: z.string()
@@ -66,7 +67,10 @@ export default function Form() {
                 register={register('github')}
                 error={errors.github?.message}
             />
-            <Button className="w-full bg-orange-600 hover:bg-orange-700" type="submit">Generate My Ticket</Button>
+            <div className="w-full flex flex-col items-center justify-center gap-1">
+                <Button className="w-full bg-orange-600 hover:bg-orange-700" type="submit">Generate My Ticket</Button>
+                <Link href="/ticket" className="text-sm underline tracking-tighter text-orange-400 hover:text-orange-500">I already have a ticket</Link>
+            </div>
       </form>
     )
 }
