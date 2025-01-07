@@ -9,11 +9,14 @@ import { Button } from "@/components/ui/button"
 import { Home } from "lucide-react"
 import 'react-loading-skeleton/dist/skeleton.css'
 import Skeleton from "react-loading-skeleton"
+import { useRouter } from "next/navigation"
 
 export default function Ticket() {
     const { ticketId } = useParams()
     const [ticket, setTicket] = useState(null)
     const [avatarUrl, setAvatarUrl] = useState(null)
+
+    const router = useRouter()
 
     const id = ticketId?.split("-")[1]
     const userName = ticketId?.split("-")[0]
@@ -27,9 +30,13 @@ export default function Ticket() {
                         userName: userName,
                     }
                 })
+                if (response.status === 404) 
+                    router.push('/not-found')
+                
                 setTicket(response.data)
             } catch (error) {
                 console.error('Failed to fetch ticket:', error)
+                router.push('/not-found')
             }
         }
         getTicket()
@@ -64,7 +71,7 @@ export default function Ticket() {
 
     return (
         <div className="w-screen h-screen bg-slate-950 flex flex-col items-center justify-center text-zinc-50 background gap-8">
-            <Link href="/"><Button className="absolute top-2 right-2 bg-orange-600 hover:bg-orange-700" type="submit"><Home />Back to home</Button></Link>
+            <Link href="/"><Button className="absolute top-2 right-2 bg-orange-600 hover:bg-orange-700"><Home />Back to home</Button></Link>
             <Image 
                 className="-ml-1"
                 src="/logo-full.svg"
