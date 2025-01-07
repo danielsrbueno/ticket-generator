@@ -1,15 +1,61 @@
-//"use client"
+"use client"
+import { useEffect, useState } from "react"
+import { useParams } from "next/navigation"
 import Image from "next/image"
 import { Github } from "lucide-react"
+import api from "@/services/api"
 
-export default function Ticket({ fullname, email, github, ticketcode }) {
-    ticketcode = "#01609"
-    email = "contato@danbueno.com"
-    github = "danielsrbueno"
-    userimg = "https://avatars.githubusercontent.com/u/111004405"
-    fullname = "Daniel da Silva Ramos Bueno"
-    fullname = fullname.split(" ")
-    fullname = fullname[0] + " " + fullname[fullname.length -1]
+export default function Ticket() {
+    const { ticketId } = useParams()
+    const [ticket, setTicket] = useState(null)
+    const [avatarUrl, setAvatarUrl] = useState(null)
+
+    const id = ticketId?.split("-")[1]
+    const userName = ticketId?.split("-")[0]
+
+    useEffect(() => {
+        async function getTicket() {
+            try {
+                const response = await api.get('/ticket', {
+                    params: {
+                        id: id,
+                        userName: userName,
+                    }
+                })
+                setTicket(response.data)
+            } catch (error) {
+                console.error('Failed to fetch ticket:', error)
+            }
+        }
+        getTicket()
+    }, [])
+
+    useEffect(() => {
+        async function getGitHubProfileImage() {
+            if (ticket?.userGithub) 
+                try {
+                    const response = await fetch(`https://api.github.com/users/${ticket?.userGithub}`)
+
+                    if (!response.ok) 
+                        throw new Error(`Error: ${response.status} - ${response.statusText}`)
+                    
+                    const userData = await response.json()
+                    setAvatarUrl(userData.avatar_url)
+                } catch (error) {
+                    console.error('Failed to fetch GitHub profile image:', error)
+                }
+
+        }
+        getGitHubProfileImage()
+    }, [ticket?.userGithub])
+
+    const ticketid = ticket?.ticketId
+    const ticketcode = ticketid?.split("-")[1]
+    const email = ticket?.userEmail
+    const github = ticket?.userGithub
+    let fullname = ticket?.userName
+    fullname = fullname?.split(" ")
+    fullname = fullname ? fullname[0] + " " + fullname[fullname.length - 1] : ""
 
     return (
         <div className="w-screen h-screen bg-slate-950 flex flex-col items-center justify-center text-zinc-50 background gap-8">
@@ -36,9 +82,9 @@ export default function Ticket({ fullname, email, github, ticketcode }) {
                 <div className="flex gap-4">
                     <img
                         className="rounded-lg"
-                        src={userimg}
                         width={80}
-                        alt="Coding Conf Logo"
+                        alt="Github Avatar"
+                        src={avatarUrl || "/favicon.ico"}
                     />
                     <div className="h-full flex flex-col gap-2 py-2">
                         <p className="font-semibold text-lg">{fullname}</p>
@@ -49,7 +95,7 @@ export default function Ticket({ fullname, email, github, ticketcode }) {
                     </div>
                 </div>
                 <div className="absolute left-[27.46rem] flex items-center rotate-90 text-zinc-50/60 text-xl font-extralight">
-                    <p>{ticketcode}</p>
+                    <p>{`#${ticketcode}`}</p>
                 </div>
             </div>
         </div>

@@ -3,11 +3,12 @@
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
 import { InputWithLabel } from "@/components/inputWithLabel"
 import { Button } from "@/components/ui/button"
+import { useRouter } from 'next/navigation'
+import api from "@/services/api"
 
-const createUserSchema = z.object({
+const createTicketSchema = z.object({
     fullname: z.string()
     .nonempty('Enter your name')
     .transform(name => {
@@ -26,17 +27,22 @@ const createUserSchema = z.object({
 
 export default function Form() {
     const { register, handleSubmit, formState: {errors} } = useForm({
-        resolver: zodResolver(createUserSchema)
+        resolver: zodResolver(createTicketSchema)
     })
 
-    const [output, setOutput] = useState('')
+    const router = useRouter()
 
-    function createUser(data) {
-        setOutput(JSON.stringify(data))
+    async function createTicket(data) {
+        const response = await api.post('/ticket', {
+            userName: data.fullname,
+            userEmail: data.email,
+            userGithub: data.github
+        })
+        router.push(`/ticket/${response.data.ticketId}`)
     }
 
     return (
-        <form onSubmit={handleSubmit(createUser)} className="w-1/3 flex flex-col items-center gap-5">
+        <form onSubmit={handleSubmit(createTicket)} className="w-1/3 flex flex-col items-center gap-5">
             <InputWithLabel 
                 id="fullname" 
                 label="Full Name" 
@@ -61,7 +67,6 @@ export default function Form() {
                 error={errors.github?.message}
             />
             <Button className="w-full bg-orange-600 hover:bg-orange-700" type="submit">Generate My Ticket</Button>
-            <pre>{output}</pre>
       </form>
     )
 }
