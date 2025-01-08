@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
   	extend: {
+		backgroundImage: {
+			'ticket': "url('/pattern-ticket.svg')",
+		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
