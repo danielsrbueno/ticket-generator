@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { useRouter } from 'next/navigation'
 import api from "@/services/api"
 import Link from "next/link"
+import emailjs from '@emailjs/browser'
 
 const createTicketSchema = z.object({
     fullname: z.string()
@@ -39,8 +40,20 @@ export default function Form() {
             userEmail: data.email,
             userGithub: data.github
         })
+
+        const ticketId = response.data.ticketId
+
         router.push(`/ticket/${response.data.ticketId}`)
         localStorage.setItem('ticketId', response.data.ticketId)
+        emailjs.send('service_ss1570s', 'template_twaj7yj', {
+            user_name: data.fullname,
+            to_email: data.email,
+            ticket_code: ticketId.split('-')[1]
+        }, 'dQqmKUYxImvotDZ3B').then((res) => {
+            console.log('Email sent! ', res.status)
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     return (
