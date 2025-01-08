@@ -27,12 +27,13 @@ export default function FindTicket() {
 
     async function findTicket(data) {
         router.push(`/ticket/${data.userName}-${data.ticketId}`)
+        localStorage.setItem('ticketId', `${data.userName}-${data.ticketId}`)
     }
 
     return (
         <div className="w-screen h-screen bg-slate-950 flex flex-col items-center justify-center text-zinc-50 background gap-8">
-            <h1 className="text-3xl font-bold">Find your ticket</h1>
-            <form onSubmit={handleSubmit(findTicket)} className="w-1/3 flex flex-col items-center gap-5">
+            <h1 className="text-4xl font-extrabold text-center max-sm:text-2xl">Find your ticket</h1>
+            <form onSubmit={handleSubmit(findTicket)} className="w-1/3 flex flex-col items-center gap-5 max-md:w-8/12">
                 <InputWithLabel 
                     id="userName" 
                     label="First Name" 

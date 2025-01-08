@@ -40,10 +40,11 @@ export default function Form() {
             userGithub: data.github
         })
         router.push(`/ticket/${response.data.ticketId}`)
+        localStorage.setItem('ticketId', response.data.ticketId)
     }
 
     return (
-        <form onSubmit={handleSubmit(createTicket)} className="w-1/3 flex flex-col items-center gap-5">
+        <form onSubmit={handleSubmit(createTicket)} className="w-1/3 flex flex-col items-center gap-5 max-md:w-8/12">
             <InputWithLabel 
                 id="fullname" 
                 label="Full Name" 
